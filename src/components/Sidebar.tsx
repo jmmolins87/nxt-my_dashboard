@@ -6,6 +6,7 @@ import Image from "next/image";
 import { 
     IoBrowsersOutline, 
     IoCalculator, 
+    IoFootball, 
     IoLogoReact 
 } from "react-icons/io5";
 
@@ -23,6 +24,12 @@ const menuItems = [
         icon: <IoCalculator className="text-2xl" />,
         title: "Counter",
         subtitle: "Manage your counter"
+    },
+    {
+        path: "/dashboard/pokemons",
+        icon: <IoFootball className="text-2xl" />,
+        title: "Pokémons",
+        subtitle: "Generación estática"
     }
 ]
 

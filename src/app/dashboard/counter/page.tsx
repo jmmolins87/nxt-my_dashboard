@@ -5,7 +5,7 @@
 
 
 import { Metadata } from "next";
-import { CartCounter } from "@/app/shopping-cart";
+import { CartCounter } from "@/shopping-cart";
 
 
 
