@@ -6,32 +6,37 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import { Pokemon } from "@/pokemons";
+import { Pokemon, PokemonsResponse } from "@/pokemons";
 
 interface PokemonPageProps {
-    params: Promise<{ id: string }>
+    params: Promise<{ id: string, name: string }>
 }
 
 
 // En build time
 export async function generateStaticParams() {
 
-    const static649Pokemons = Array.from({ length: 649 }).map((_, i) => `${i + 1}`);
-
-    return static649Pokemons.map(id => ({
-        id: id
-    }));
+    const data: PokemonsResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=649`)
+        .then(res => res.json())
+    
+    const static649Pokemons = data.results.map(pokemon => ({
+        name: pokemon.name
+    }))
+    
+    return static649Pokemons.map(({ name }) => ({
+        name: name
+    }))
 }
 
 export async function generateMetadata({ params }: PokemonPageProps): Promise<Metadata> {
 
     try {
-        const { id } = await params;
-        const pokemon = await getPokemon(id);
+        const { id, name } = await params;
+        const pokemon = await getPokemon( name );
 
         return {
-            title: `#${ id } - ${ pokemon.name }`,
-            description: `Pokémon`
+            title: `#${ pokemon.id } - ${ pokemon.name }`,
+            description: `Esta es la página del Pokémon ${ pokemon.name }`
         }
     } catch {
         return {
@@ -41,18 +46,16 @@ export async function generateMetadata({ params }: PokemonPageProps): Promise<Me
     }
 }
 
-const getPokemon = async ( id: string ): Promise<Pokemon> => {
+const getPokemon = async (name: string): Promise<Pokemon> => {
 
     try {
-        const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${ id }`, {
+        const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${ name }`, {
             // cache: 'force-cache',
             next: {
                 revalidate: 60 * 60 * 30 * 6
             }
-        }).then( res => res.json())
+        }).then(res => res.json())
 
-        console.log('Se cargó: ', pokemon)
-    
         return pokemon
     } catch {
         notFound()
@@ -62,29 +65,29 @@ const getPokemon = async ( id: string ): Promise<Pokemon> => {
 
 export default async function PokemonPage({ params }: PokemonPageProps) {
 
-    const { id } = await params;
-    const pokemon = await getPokemon( id )
+    const { name } = await params;
+    const pokemon = await getPokemon(name)
 
     return (
         <div className="flex flex-col items-center text-slate-800 p-10">
-            <div className="relative flex flex-col items-center rounded-[20px] w-3/4 mx-auto bg-white bg-clip-border shadow-lg p-5">
+            <div className="relative flex flex-col items-center rounded-[20px] w-full md:w-3/4 mx-auto bg-white bg-clip-border shadow-lg p-5">
                 <div className="mt-2 mb-8 w-full">
                     <h1 className="px-2 text-xl font-bold text-slate-700 capitalize">
-                        #{ pokemon.id } { pokemon.name }
+                        #{pokemon.id} {pokemon.name}
                     </h1>
                     <div className="flex flex-col justify-center items-center">
                         <Image
                             src={pokemon.sprites.other?.dream_world.front_default ?? ''}
                             width={150}
                             height={150}
-                            alt={`Imagen del pokemon ${ pokemon.name }`}
-                            title={`Imagen del pokemon ${ pokemon.name }`}
+                            alt={`Imagen del pokemon ${pokemon.name}`}
+                            title={`Imagen del pokemon ${pokemon.name}`}
                             className="mb-5"
                         />
                         <div className="flex flex-wrap">
                             {
                                 pokemon.moves.map(move => (
-                                    <p key={ move.move.name } className="mr-2 capitalize">{ move.move.name }</p>
+                                    <p key={move.move.name} className="mr-2 capitalize">{move.move.name}</p>
                                 ))
                             }
                         </div>
@@ -96,7 +99,7 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
                         <div className="text-base font-medium text-navy-700 flex">
                             {
                                 pokemon.types.map(type => (
-                                    <p key={ type.slot } className="mr-2 capitalize">{ type.type.name }</p>
+                                    <p key={type.slot} className="mr-2 capitalize">{type.type.name}</p>
                                 ))
                             }
                         </div>
@@ -116,15 +119,15 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
                                 src={pokemon.sprites.front_default}
                                 width={100}
                                 height={100}
-                                alt={`sprite ${ pokemon.name }`}
-                                title={`sprite ${ pokemon.name }`}
+                                alt={`sprite ${pokemon.name}`}
+                                title={`sprite ${pokemon.name}`}
                             />
                             <Image
                                 src={pokemon.sprites.back_default}
                                 width={100}
                                 height={100}
-                                alt={`sprite ${ pokemon.name }`}
-                                title={`sprite ${ pokemon.name }`}
+                                alt={`sprite ${pokemon.name}`}
+                                title={`sprite ${pokemon.name}`}
                             />
                         </div>
                     </div>
@@ -135,15 +138,15 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
                                 src={pokemon.sprites.front_shiny}
                                 width={100}
                                 height={100}
-                                alt={`sprite ${ pokemon.name }`}
-                                title={`sprite ${ pokemon.name }`}
+                                alt={`sprite ${pokemon.name}`}
+                                title={`sprite ${pokemon.name}`}
                             />
                             <Image
                                 src={pokemon.sprites.back_shiny}
                                 width={100}
                                 height={100}
-                                alt={`sprite ${ pokemon.name }`}
-                                title={`sprite ${ pokemon.name }`}
+                                alt={`sprite ${pokemon.name}`}
+                                title={`sprite ${pokemon.name}`}
                             />
                         </div>
                     </div>

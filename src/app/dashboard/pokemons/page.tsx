@@ -8,7 +8,7 @@ import {
 } from "@/pokemons";
 
 
-const getPokemons = async (limit: number = 151, offset: number = 0): Promise<SimplePokemon[]> => {
+const getPokemons = async (limit: number = 649, offset: number = 0): Promise<SimplePokemon[]> => {
 
   const data: PokemonsResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${ limit }&offset=${ offset }`)
     .then(res => res.json())
@@ -17,8 +17,6 @@ const getPokemons = async (limit: number = 151, offset: number = 0): Promise<Sim
     id: pokemon.url.split('/').at(-2)!,
     name: pokemon.name
   }))
-
-  // throw new Error("Eso es un error que no debería suceder")
 
   return pokemons
 }
