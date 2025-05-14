@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PokemonPageProps): Promise<Me
         const pokemon = await getPokemon( name );
 
         return {
-            title: `#${ pokemon.id } - ${ pokemon.name }`,
+            title: `#${ id } - ${ pokemon.name }`,
             description: `Esta es la página del Pokémon ${ pokemon.name }`
         }
     } catch {

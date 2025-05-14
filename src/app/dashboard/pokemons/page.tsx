@@ -7,6 +7,10 @@ import {
   SimplePokemon
 } from "@/pokemons";
 
+export const metadata = {
+  title: 'Pokémons',
+  description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident soluta aliquam enim ipsa deleniti fugiat perferendis! Perferendis quae adipisci vitae ratione vel accusantium nisi exercitationem consectetur odit omnis. Harum, quidem?',
+}; 
 
 const getPokemons = async (limit: number = 649, offset: number = 0): Promise<SimplePokemon[]> => {
 
@@ -29,7 +33,7 @@ export default async function PokemonsPage() {
   return (
 
     <div className="flex flex-col">
-      <h1 className="text-5xl underline m-2">Listado Pokémons <small>Estático</small></h1>
+      <h1 className="text-5xl m-2">Listado Pokémons <small className="text-blue-500">Estático</small></h1>
       <PokemonGrid pokemons={ pokemons } />
     </div>
   );

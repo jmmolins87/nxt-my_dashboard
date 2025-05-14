@@ -7,6 +7,7 @@ import {
     IoBrowsersOutline, 
     IoCalculator, 
     IoFootball, 
+    IoHeartOutline, 
     IoLogoReact 
 } from "react-icons/io5";
 
@@ -30,6 +31,12 @@ const menuItems = [
         icon: <IoFootball className="text-2xl" />,
         title: "Pokémons",
         subtitle: "Generación estática"
+    },
+    {
+        path: "/dashboard/favorites",
+        icon: <IoHeartOutline className="text-2xl" />,
+        title: "Favoritos",
+        subtitle: "Global State"
     }
 ]
 
