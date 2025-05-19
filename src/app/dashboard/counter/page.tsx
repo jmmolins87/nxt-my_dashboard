@@ -16,9 +16,9 @@ export const metadata = {
 export default function CounterPage() {
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center gap-2 w-full h-full">
       <span>Productos en el carrito</span>
-      <CartCounter initialValue={1} />
+      <CartCounter initialValue={ 1 } />
     </div>
   );
 }

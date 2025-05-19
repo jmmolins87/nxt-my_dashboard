@@ -50,9 +50,9 @@ export const CartCounter = ({ initialValue }: CartCounterProps ) => {
     },[dispatch, initialValue]);
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <span className="text-5xl mt-2">{ counter }</span>
-            <div className="flex justify-between items-center gap-4 mt-2">
+        <div className="flex flex-col justify-center items-center gap-2">
+            <span className="text-5xl">{ counter }</span>
+            <div className="flex justify-between items-center gap-4">
                 <button
                     onClick={() => dispatch(substractOne())}
                     disabled={counter <= 0}

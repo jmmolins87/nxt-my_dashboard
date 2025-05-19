@@ -32,7 +32,7 @@ export const SimpleWidget = ({ title, subTitle, label, icon, href }: SimpleWidge
                 </div>
                 <div className="w-full place-items-end text-right border-t-2 border-gray-100 mt-2 pt-2">
                     { 
-                        href && (<Link href={ href } className="text-indigo-600 font-medium">Cambiar nº de productos</Link>)
+                        href && (<Link href={href} className="text-blue-500 font-medium">Cambiar nº de productos</Link>)
                     }
                 </div>
             </div>
